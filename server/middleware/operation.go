@@ -96,7 +96,17 @@ func OperationRecord() gin.HandlerFunc {
 		record.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
 		record.Status = c.Writer.Status()
 		record.Latency = latency
-		record.Resp = writer.body.String()
+		// 判断响应类型，若为PDF等二进制流，则不记录Resp内容
+		contentType := c.Writer.Header().Get("Content-Type")
+		if strings.Contains(contentType, "application/pdf") ||
+			strings.Contains(contentType, "application/octet-stream") ||
+			strings.Contains(contentType, "application/zip") ||
+			strings.Contains(contentType, "application/msword") ||
+			strings.Contains(contentType, "application/vnd") {
+			record.Resp = "[二进制流内容未记录]"
+		} else {
+			record.Resp = writer.body.String()
+		}
 
 		if strings.Contains(c.Writer.Header().Get("Pragma"), "public") ||
 			strings.Contains(c.Writer.Header().Get("Expires"), "0") ||

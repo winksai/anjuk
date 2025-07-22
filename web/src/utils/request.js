@@ -74,6 +74,10 @@ service.interceptors.response.use(
     if (!response.config.donNotShowLoading) {
       closeLoading()
     }
+    // 新增：如果是文件流（blob），直接返回，不弹窗
+    if (response.config.responseType === 'blob') {
+      return response
+    }
     if (response.headers['new-token']) {
       userStore.setToken(response.headers['new-token'])
     }
@@ -85,7 +89,7 @@ service.interceptors.response.use(
     } else {
       ElMessage({
         showClose: true,
-        message: response.data.msg || decodeURI(response.headers.msg),
+        message: response.data.msg || (response.headers.msg ? decodeURI(response.headers.msg) : '请求出错'),
         type: 'error'
       })
       return response.data.msg ? response.data : response

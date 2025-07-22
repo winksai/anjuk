@@ -6,7 +6,7 @@ import (
 
 func bizModel() error {
 	db := global.GVA_DB
-	err := db.AutoMigrate()
+	err := db.AutoMigrate() //order.RentalOrder{}
 	if err != nil {
 		return err
 	}

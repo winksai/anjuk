@@ -25,6 +25,12 @@ const routes = [
     component: () => import('@/view/example/upload/scanUpload.vue')
   },
   {
+    path: '/order/rentalOrder/detail',
+    name: 'RentalOrderDetail',
+    component: () => import('@/view/order/rentalOrder/rentalOrderDetail.vue'),
+    meta: { title: '订单详情', keepAlive: false }
+  },
+  {
     path: '/:catchAll(.*)',
     meta: {
       closeTab: true
