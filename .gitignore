@@ -28,6 +28,7 @@ rm_file/
 /server/latest_log
 /server/__debug_bin*
 server/uploads/
+server/config.docker.yaml
 
 *.iml
 web/.pnpm-debug.log
@@ -40,3 +41,10 @@ web/pnpm-lock.yaml
 *.db
 *.sqlite
 *.sqlite3
+
+gomod/
+go.sum
+
+web/.env.development
+
+
